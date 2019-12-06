@@ -17,7 +17,12 @@ namespace Harmonic.Hosting
 
         internal RtmpServerOptions _serverOptions = null;
 
-        internal void RegisterController<T>() where T: WebSocketController
+        public void Register<T>() where T : WebSocketController
+        {
+            _controllers.Add(typeof(T).Name.Replace("Controller", "").ToLower(), typeof(T));
+        }
+
+        public void RegisterController<T>() where T: WebSocketController
         {
             RegisterController(typeof(T));
         }

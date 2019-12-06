@@ -28,6 +28,8 @@ namespace Harmonic.Networking.WebSocket
         private FlvMuxer _flvMuxer = null;
         public RtmpServerOptions Options => _options._serverOptions;
 
+        public IWebSocketConnection WebSocketConnection => _webSocketConnection;
+
         public WebSocketSession(IWebSocketConnection connection, WebSocketOptions options)
         {
             _webSocketConnection = connection;
@@ -77,8 +79,9 @@ namespace Harmonic.Networking.WebSocket
                     _webSocketConnection.Close();
                 }, TaskContinuationOptions.OnlyOnFaulted); ;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 _webSocketConnection.Close();
             }
         }
