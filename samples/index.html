@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <head>
+  <body>
+    <!--<button id="play" onclick="play()">播放</button> -->
+    <video style="height:500px" controls  autoplay muted="muted"  id="videoElement"></video>
+	<video style="height:500px" controls  autoplay muted="muted"  id="videoElement2"></video>
+    <script src="flv.min.js"></script>
+    <script>
+      var type =getQueryVariable("type");
+     // var ws="ws://172.45.8.36:8189/powersmart/"+type+"";
+      //alert(ws);
+      var flvPlayer = null;
+	  
+    var player = document.getElementById('videoElement'); 
+        if (flvjs.isSupported()) { 
+          flvPlayer = flvjs.createPlayer({
+            type: 'flv', 
+            isLive: true,
+            url: "ws://127.0.0.1:8189/powersmart/streamName"
+          });
+          flvPlayer.attachMediaElement(videoElement);
+          flvPlayer.load();  
+         flvPlayer.play();
+        }   
+      function play() {
+        player.play();
+      }
+	  
+	  var flvPlayer2 = null;
+	   var player2 = document.getElementById('videoElement2'); 
+        if (flvjs.isSupported()) { 
+          flvPlayer2 = flvjs.createPlayer({
+            type: 'flv', 
+            isLive: true,
+            url: "ws://127.0.0.1:8189/powersmart/streamName2"
+          });
+          flvPlayer2.attachMediaElement(videoElement);
+          flvPlayer2.load();  
+         flvPlayer2.play();
+        }   
+      function play2() {
+        player2.play();
+      }
+	  
+//http://www.runoob.com/index.php?id=1&image=awesome.jpg
+//调用 getQueryVariable("id") 返回 1。
+
+//调用 getQueryVariable("image") 返回 "awesome.jpg"。
+ function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+  
+    </script>
+  </body>
+
+</html>
