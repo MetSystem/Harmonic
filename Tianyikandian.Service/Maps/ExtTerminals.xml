@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SmartSqlMap Scope="ExtTerminal" xmlns="http://SmartSql.net/schemas/SmartSqlMap.xsd">
+  <Statements>
+    <Statement Id="Query">
+      SELECT COUNT(0) FROM `wryzxjk_tx`.`t_wryzx_sssj`
+      <For Prepend="WHERE" Key="WhereItem" Open="" Close="" Property="WhereCols" Separator="AND" Model="SQL">
+        ?WhereItem.Key='?WhereItem.Value'
+      </For>
+    </Statement>
+    <Statement Id="Update">
+      UPDATE `wryzxjk_tx`.`t_wryzx_sssj` SET
+      <For Prepend="" Key="ColItem" Open="" Close="" Property="Data" Separator="," Model="SQL">
+        ?ColItem.Key='?ColItem.Value'
+      </For>
+      <For Prepend="WHERE" Key="WhereItem" Open="" Close="" Property="WhereCols" Separator="AND" Model="SQL">
+        ?WhereItem.Key='?WhereItem.Value'
+      </For>
+    </Statement>
+    <Statement Id="Insert">
+      <IdGenerator Name="SnowflakeId" Id="XH"/>
+      INSERT INTO `wryzxjk_tx`.`t_wryzx_sssj` (`XH`
+      <For Prepend="" Key="ItemKey" Open="," Close=")" Property="Data" Separator="," Model="SQL">
+        `?ItemKey.Key`
+      </For>
+      VALUES(?XH
+      <For Prepend="" Key="ItemValue" Open="," Close=")" Property="Data" Separator=",">
+        ?ItemValue.Value
+      </For>
+    </Statement>
+  </Statements>
+</SmartSqlMap>

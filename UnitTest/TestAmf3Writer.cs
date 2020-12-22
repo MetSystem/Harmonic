@@ -1,15 +1,9 @@
-﻿using Harmonic.Buffers;
-using Harmonic.Networking.Amf.Attributes;
-using Harmonic.Networking.Amf.Common;
-using Harmonic.Networking.Amf.Data;
+﻿using Harmonic.Networking.Amf.Common;
 using Harmonic.Networking.Amf.Serialization.Amf3;
 using Harmonic.Networking.Amf.Serialization.Attributes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace UnitTest
@@ -103,7 +97,6 @@ namespace UnitTest
                 Assert.IsNull(readVal);
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
         [TestMethod]
@@ -122,7 +115,6 @@ namespace UnitTest
                 Assert.IsNotNull(readVal);
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
         [TestMethod]
@@ -174,7 +166,6 @@ namespace UnitTest
                 Assert.IsTrue(arr.SequenceEqual(readVal));
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
         [TestMethod]
@@ -254,13 +245,12 @@ namespace UnitTest
                 Assert.AreEqual(val.v2, ext.v2);
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
-        public class TestCls2: IEquatable<TestCls2>
+        public class TestCls2 : IEquatable<TestCls2>
         {
             [ClassField]
-            public double t1 {get;set;}
+            public double t1 { get; set; }
 
             public bool Equals(TestCls2 other)
             {
@@ -340,7 +330,7 @@ namespace UnitTest
             var reader = new Amf3Reader();
             var writer = new Amf3Writer();
             reader.RegisterTypedObject<TestCls>();
-            
+
             var t = new TestCls()
             {
                 T1 = 3.3,
@@ -381,7 +371,6 @@ namespace UnitTest
                 Assert.AreNotEqual(ud.GetElementsByTagName("price").Count, 0);
                 Assert.AreEqual(consunmed, buffer.Length);
             }
-
         }
 
         [TestMethod]
@@ -404,8 +393,6 @@ namespace UnitTest
                 Assert.AreNotEqual(ud.GetElementsByTagName("price").Count, 0);
                 Assert.AreEqual(consunmed, buffer.Length);
             }
-
-
         }
 
         [TestMethod]
@@ -425,7 +412,6 @@ namespace UnitTest
                 Assert.AreEqual(v, readVal);
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
         [TestMethod]
@@ -445,7 +431,6 @@ namespace UnitTest
                 Assert.AreEqual(v, readVal);
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
         [TestMethod]
@@ -465,7 +450,6 @@ namespace UnitTest
                 Assert.AreEqual(v, readVal);
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
         [TestMethod]
@@ -497,7 +481,6 @@ namespace UnitTest
                 Assert.AreEqual(v, readVal);
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
         [TestMethod]
@@ -529,7 +512,6 @@ namespace UnitTest
                 Assert.AreEqual(v, readVal);
                 Assert.AreEqual(buffer.Length, consumed);
             }
-
         }
 
         [TestMethod]
@@ -550,11 +532,8 @@ namespace UnitTest
                     Assert.IsTrue(reader.TryGetString(buffer, out var readVal, out var consumed));
                     Assert.AreEqual(str, readVal);
                     Assert.AreEqual(buffer.Length, consumed);
-
                 }
             }
-
         }
-
     }
 }

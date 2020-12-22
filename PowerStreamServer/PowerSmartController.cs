@@ -2,10 +2,9 @@
 using Harmonic.Networking.WebSocket;
 using Harmonic.Service;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PowerStreamServer
@@ -23,27 +22,36 @@ namespace PowerStreamServer
 
         public override Task OnConnect()
         {
-            var ffmpegProcess = PowerManager.FFmpegProcessList.Where(s => s.StreamName == this.StreamName).FirstOrDefault();
-            if (ffmpegProcess == null)
+            var result = false;
+            var ffmpegProcess = Power.FFmpegProcessList.FirstOrDefault(s => s.StreamName == this.StreamName);
+            if (ffmpegProcess != null)
             {
-                PowerManager.FFmpegProcessList.Add(new StreamConnection()
+                result = !ffmpegProcess.PID.HasValue;
+                if (ffmpegProcess.PID.HasValue)
                 {
-                    StreamName = this.StreamName,
-                    WsConnection = new List<WebSocketSession>() { Session }
-                });
-            }
-            else
-            {
-                var wsConn = ffmpegProcess.WsConnection
-                    .Where(c => c.WebSocketConnection.ConnectionInfo.ClientIpAddress == this.Session.WebSocketConnection.ConnectionInfo.ClientIpAddress)
-                    .FirstOrDefault();
-
+                     var hasProcess = Process.GetProcessesByName("ffmpeg")?.FirstOrDefault(t=>t.Id == ffmpegProcess.PID.Value);
+                    if (hasProcess == null)
+                    {
+                        ffmpegProcess.PID = null;
+                        result = true;
+                    }
+                    else
+                    {
+                        ffmpegProcess.LastActiveTime = DateTime.Now;
+                    }
+                }
+                var wsConn = ffmpegProcess.WsConnection?
+                    .FirstOrDefault(c => c.WebSocketConnection.ConnectionInfo.ClientIpAddress == this.Session.WebSocketConnection.ConnectionInfo.ClientIpAddress);
                 if (wsConn == null)
                 {
                     ffmpegProcess.WsConnection.Add(this.Session);
                 }
             }
-            StreamService.Send(this.StreamName);
+
+            if (ffmpegProcess == null || result)
+            {
+                StreamService.Send(this.StreamName);
+            }
 
             return base.OnConnect();
         }

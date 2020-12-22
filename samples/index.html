@@ -6,8 +6,7 @@
   <head>
   <body>
     <!--<button id="play" onclick="play()">播放</button> -->
-    <video style="height:500px" controls  autoplay muted="muted"  id="videoElement"></video>
-	<video style="height:500px" controls  autoplay muted="muted"  id="videoElement2"></video>
+    <video style="height:500px" controls autoplay muted id="videoElement"></video>
     <script src="flv.min.js"></script>
     <script>
       var type =getQueryVariable("type");
@@ -20,7 +19,7 @@
           flvPlayer = flvjs.createPlayer({
             type: 'flv', 
             isLive: true,
-            url: "ws://127.0.0.1:8189/powersmart/streamName"
+            url: "ws://127.0.0.1:8189/powersmart/test"//streamName 8128B493002
           });
           flvPlayer.attachMediaElement(videoElement);
           flvPlayer.load();  
@@ -30,21 +29,7 @@
         player.play();
       }
 	  
-	  var flvPlayer2 = null;
-	   var player2 = document.getElementById('videoElement2'); 
-        if (flvjs.isSupported()) { 
-          flvPlayer2 = flvjs.createPlayer({
-            type: 'flv', 
-            isLive: true,
-            url: "ws://127.0.0.1:8189/powersmart/streamName2"
-          });
-          flvPlayer2.attachMediaElement(videoElement);
-          flvPlayer2.load();  
-         flvPlayer2.play();
-        }   
-      function play2() {
-        player2.play();
-      }
+
 	  
 //http://www.runoob.com/index.php?id=1&image=awesome.jpg
 //调用 getQueryVariable("id") 返回 1。

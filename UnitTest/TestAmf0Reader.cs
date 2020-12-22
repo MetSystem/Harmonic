@@ -1,12 +1,9 @@
-﻿using Harmonic.Networking.Amf.Attributes;
-using Harmonic.Networking.Amf.Data;
-using Harmonic.Networking.Amf.Serialization.Amf0;
+﻿using Harmonic.Networking.Amf.Serialization.Amf0;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace UnitTest
 {
@@ -81,7 +78,6 @@ namespace UnitTest
         {
             var reader = new Amf0Reader();
 
-
             using (var f = new FileStream("../../../../samples/amf0/misc/array.amf0", FileMode.Open))
             {
                 var data = new byte[f.Length];
@@ -97,7 +93,6 @@ namespace UnitTest
         public void TestReadDate()
         {
             var reader = new Amf0Reader();
-
 
             using (var f = new FileStream("../../../../samples/amf0/misc/date.amf0", FileMode.Open))
             {
@@ -117,7 +112,6 @@ namespace UnitTest
         {
             var reader = new Amf0Reader();
 
-
             using (var f = new FileStream("../../../../samples/amf0/misc/longstring.amf0", FileMode.Open))
             {
                 var data = new byte[f.Length];
@@ -133,7 +127,6 @@ namespace UnitTest
         public void TestReadNull()
         {
             var reader = new Amf0Reader();
-
 
             using (var f = new FileStream("../../../../samples/amf0/misc/null.amf0", FileMode.Open))
             {
@@ -151,7 +144,6 @@ namespace UnitTest
         {
             var reader = new Amf0Reader();
 
-
             using (var f = new FileStream("../../../../samples/amf0/misc/null.amf0", FileMode.Open))
             {
                 var data = new byte[f.Length];
@@ -167,7 +159,6 @@ namespace UnitTest
         public void TestReadXml()
         {
             var reader = new Amf0Reader();
-
 
             using (var f = new FileStream("../../../../samples/amf0/misc/xml.amf0", FileMode.Open))
             {
@@ -187,7 +178,6 @@ namespace UnitTest
         {
             var reader = new Amf0Reader();
 
-
             using (var f = new FileStream("../../../../samples/amf0/misc/undefined.amf0", FileMode.Open))
             {
                 var data = new byte[f.Length];
@@ -197,7 +187,7 @@ namespace UnitTest
                 Assert.AreEqual(consumed, f.Length);
             }
         }
-        
+
         [TestMethod]
         public void TestReadEcmaArray()
         {
@@ -237,7 +227,7 @@ namespace UnitTest
                 Assert.AreEqual(consumed, data.Length);
             }
         }
-        
+
         [TestMethod]
         public void TestPacket()
         {
@@ -252,6 +242,5 @@ namespace UnitTest
                 Assert.AreEqual(consumed, file.Length);
             }
         }
-
     }
 }

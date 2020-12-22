@@ -10,20 +10,21 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace UnitTest
 {
-
     [TypedObject(Name = "TestClass")]
     public class TestCls : IDynamicObject, IEquatable<TestCls>
     {
         [ClassField(Name = "t1")]
         public double T1 { get; set; }
+
         [ClassField(Name = "t2")]
         public string T2 { get; set; }
+
         [ClassField(Name = "t3")]
         public string T3 { get; set; }
+
         [ClassField]
         public Vector<int> t4 { get; set; }
 
@@ -81,20 +82,28 @@ namespace UnitTest
 
         [ClassField(Name = "body")]
         public object Body { get; set; }
+
         [ClassField(Name = "clientId")]
         public object ClientId { get; set; }
+
         [ClassField(Name = "destination")]
         public object Destination { get; set; }
+
         [ClassField(Name = "headers")]
         public object Headers { get; set; }
+
         [ClassField(Name = "messageId")]
         public object MessageId { get; set; }
+
         [ClassField(Name = "operation")]
         public object Operation { get; set; }
+
         [ClassField(Name = "source")]
         public object Source { get; set; }
+
         [ClassField(Name = "timeToLive")]
         public object TimeToLive { get; set; }
+
         [ClassField(Name = "timestamp")]
         public object Timestamp { get; set; }
 
@@ -208,7 +217,6 @@ namespace UnitTest
             }
         }
 
-
         [TestMethod]
         public void TestUndefined()
         {
@@ -303,7 +311,6 @@ namespace UnitTest
                 Assert.AreEqual(v3[1], 3);
                 Assert.AreEqual(v3[2], 4);
 
-
                 Assert.AreEqual(consumed, file.Length);
             }
         }
@@ -312,7 +319,6 @@ namespace UnitTest
         public void TestReadXml()
         {
             var reader = new Amf3Reader();
-
 
             using (var f = new FileStream("../../../../samples/amf3/misc/xml.amf3", FileMode.Open))
             {
@@ -332,7 +338,6 @@ namespace UnitTest
         {
             var reader = new Amf3Reader();
 
-
             using (var f = new FileStream("../../../../samples/amf3/misc/xml_document.amf3", FileMode.Open))
             {
                 var data = new byte[f.Length];
@@ -347,12 +352,10 @@ namespace UnitTest
             }
         }
 
-
         [TestMethod]
         public void TestReadArray()
         {
             var reader = new Amf3Reader();
-
 
             using (var f = new FileStream("../../../../samples/amf3/misc/array.amf3", FileMode.Open))
             {
@@ -376,7 +379,6 @@ namespace UnitTest
         public void TestReadDictionary()
         {
             var reader = new Amf3Reader();
-
 
             using (var f = new FileStream("../../../../samples/amf3/misc/dictionary.amf3", FileMode.Open))
             {
@@ -418,7 +420,6 @@ namespace UnitTest
         {
             var reader = new Amf3Reader();
 
-
             using (var f = new FileStream("../../../../samples/amf3/misc/vector_int.amf3", FileMode.Open))
             {
                 var data = new byte[f.Length];
@@ -437,7 +438,6 @@ namespace UnitTest
         public void TestReadVectorUint()
         {
             var reader = new Amf3Reader();
-
 
             using (var f = new FileStream("../../../../samples/amf3/misc/vector_uint.amf3", FileMode.Open))
             {
@@ -458,7 +458,6 @@ namespace UnitTest
         {
             var reader = new Amf3Reader();
 
-
             using (var f = new FileStream("../../../../samples/amf3/misc/vector_double.amf3", FileMode.Open))
             {
                 var data = new byte[f.Length];
@@ -472,7 +471,6 @@ namespace UnitTest
                 Assert.AreEqual(consumed, f.Length);
             }
         }
-
 
         [TestMethod]
         public void TestReadVectorTyped()
@@ -570,6 +568,5 @@ namespace UnitTest
                 Assert.AreEqual(consumed, data.Length);
             }
         }
-
     }
 }

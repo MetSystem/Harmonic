@@ -6,9 +6,7 @@ using Harmonic.Networking.Amf.Serialization.Attributes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace UnitTest
@@ -79,7 +77,6 @@ namespace UnitTest
                     Assert.AreEqual(buffer.Length, consumed);
                 }
             }
-
         }
 
         [TestMethod]
@@ -131,7 +128,6 @@ namespace UnitTest
                 Assert.IsFalse(val);
                 Assert.AreEqual(consumed, buffer.Length);
             }
-
         }
 
         [TestMethod]
@@ -184,10 +180,10 @@ namespace UnitTest
                 writer.WriteBytes(array, sc);
                 var buffer = new byte[sc.MessageLength];
                 sc.GetMessage(buffer);
-                // EcmaMarker:byte + ElementCount: uint + 
-                // StringLength: ushort + StringContent: byte * 1 + NumberMarker: byte + Number: double + 
-                // StringLength: ushort + StringContent: byte * 1 + NumberMarker: byte + Number: double 
-                // StringLength: ushort + StringContent: byte * 1 + StringMarker: byte + StringLength: ushort + StringContent: byte * 1 + 
+                // EcmaMarker:byte + ElementCount: uint +
+                // StringLength: ushort + StringContent: byte * 1 + NumberMarker: byte + Number: double +
+                // StringLength: ushort + StringContent: byte * 1 + NumberMarker: byte + Number: double
+                // StringLength: ushort + StringContent: byte * 1 + StringMarker: byte + StringLength: ushort + StringContent: byte * 1 +
                 // StringLength: ushort + StringContent: byte * 1 + ReferenceMarker: byte + ReferenceIndex: ushort +
                 // StringLength: ushort + StringConent: byte * 0 + ObjectEndMarker: byte
                 Assert.AreEqual(buffer.Length, 45);
@@ -213,7 +209,6 @@ namespace UnitTest
                 Assert.IsNull(nullObj);
                 Assert.AreEqual(consunmed, buffer.Length);
             }
-
         }
 
         [TestMethod]
@@ -232,7 +227,6 @@ namespace UnitTest
                 Assert.IsNotNull(ud);
                 Assert.AreEqual(consunmed, buffer.Length);
             }
-
         }
 
         [TestMethod]
@@ -255,7 +249,6 @@ namespace UnitTest
                 Assert.AreNotEqual(ud.GetElementsByTagName("price").Count, 0);
                 Assert.AreEqual(consunmed, buffer.Length);
             }
-
         }
 
         [TestMethod]
@@ -289,24 +282,29 @@ namespace UnitTest
                 Assert.IsTrue(reader.TryGetObject(buffer, out var readObj, out var consumed));
                 Assert.AreEqual(consumed, buffer.Length);
             }
-
         }
 
         [TypedObject(Name = "Another.Name")]
-        class TypedClass : IDynamicObject
+        private class TypedClass : IDynamicObject
         {
             [ClassField]
             public double c { get; set; }
+
             [ClassField]
             public bool test { get; set; }
+
             [ClassField]
             public object test2 { get; set; }
+
             [ClassField]
             public Undefined test3 { get; set; }
+
             [ClassField]
             public List<object> test4 { get; set; }
+
             [ClassField]
             public string test5 { get; set; }
+
             [ClassField]
             public List<object> test6 { get; set; }
 
@@ -349,8 +347,6 @@ namespace UnitTest
                 Assert.IsTrue(reader.TryGetTypedObject(buffer, out var readObj, out var consumed));
                 Assert.AreEqual(consumed, buffer.Length);
             }
-
         }
-
     }
 }

@@ -1,13 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace PowerStreamServer
 {
-    public class PowerManager
+    public class Power
     {
         public static ConcurrentBag<StreamConnection> FFmpegProcessList = new ConcurrentBag<StreamConnection>();
 

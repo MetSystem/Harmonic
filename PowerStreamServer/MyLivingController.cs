@@ -1,14 +1,11 @@
 ﻿using Harmonic.Controllers;
 using Harmonic.Controllers.Living;
 using Harmonic.Rpc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PowerStreamServer
 {
     [NeverRegister]
-    class MyLivingController : LivingController
+    internal class MyLivingController : LivingController
     {
         [RpcMethod("createStream")]
         public new uint CreateStream()
