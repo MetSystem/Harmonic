@@ -1,9 +1,6 @@
 ﻿using Harmonic.Controllers;
-using Harmonic.Networking.Amf.Common;
 using Harmonic.Rpc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp
 {
@@ -16,6 +13,7 @@ namespace Harmonic.Networking.Rtmp
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
@@ -40,7 +38,7 @@ namespace Harmonic.Networking.Rtmp
             Dispose(true);
             // GC.SuppressFinalize(this);
         }
-        #endregion
 
+        #endregion IDisposable Support
     }
 }

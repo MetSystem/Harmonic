@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Harmonic.Rpc
 {
@@ -34,13 +33,13 @@ namespace Harmonic.Rpc
     {
         public Dictionary<Type, List<RpcMethod>> Controllers = new Dictionary<Type, List<RpcMethod>>();
 
-        public void PrepareMethod<T>(T instance, CommandMessage command, out MethodInfo methodInfo, out object[] callArguments) where T: RtmpController
+        public void PrepareMethod<T>(T instance, CommandMessage command, out MethodInfo methodInfo, out object[] callArguments) where T : RtmpController
         {
             if (!Controllers.TryGetValue(instance.GetType(), out var methods))
             {
                 throw new EntryPointNotFoundException();
             }
-            
+
             foreach (var method in methods)
             {
                 if (method.MethodName != command.ProcedureName)

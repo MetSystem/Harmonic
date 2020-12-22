@@ -1,5 +1,4 @@
-﻿using Harmonic.Buffers;
-using Harmonic.Networking.Amf.Attributes;
+﻿using Harmonic.Networking.Amf.Attributes;
 using Harmonic.Networking.Amf.Common;
 using Harmonic.Networking.Amf.Serialization.Attributes;
 using Harmonic.Networking.Utils;
@@ -8,9 +7,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.IO.Pipelines;
-using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Xml;
 
@@ -19,7 +15,9 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
     public class Amf0Writer
     {
         private delegate void GetBytesHandler<T>(T value, SerializationContext context);
+
         private delegate void GetBytesHandler(object value, SerializationContext context);
+
         private IReadOnlyDictionary<Type, GetBytesHandler> _getBytesHandlers = null;
         private ArrayPool<byte> _arrayPool = ArrayPool<byte>.Shared;
 
@@ -46,7 +44,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
             getBytesHandlers[typeof(List<object>)] = GetBytesWrapper<List<object>>(WriteBytes);
             _getBytesHandlers = getBytesHandlers;
         }
-
 
         private GetBytesHandler GetBytesWrapper<T>(GetBytesHandler<T> handler)
         {
@@ -85,7 +82,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
                 {
                     context.Buffer.WriteToBuffer((byte)Amf0Type.LongString);
                 }
-
             }
             else
             {
@@ -119,7 +115,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
             {
                 _arrayPool.Return(bufferBackend);
             }
-
         }
 
         public void WriteBytes(string str, SerializationContext context)
@@ -162,7 +157,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
 
             context.Buffer.WriteToBuffer((byte)Amf0Type.Boolean);
             context.Buffer.WriteToBuffer((byte)(val ? 1 : 0));
-
         }
 
         public void WriteBytes(Undefined value, SerializationContext context)
@@ -195,7 +189,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
             {
                 _arrayPool.Return(backend);
             }
-
         }
 
         private void WriteObjectEndBytes(SerializationContext context)
@@ -224,7 +217,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
             {
                 _arrayPool.Return(backend);
             }
-
         }
 
         public void WriteBytes(XmlDocument xml, SerializationContext context)
@@ -254,7 +246,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
             {
                 throw new InvalidOperationException();
             }
-
 
             handler(value, context);
         }
@@ -413,7 +404,5 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
             WriteStringBytesImpl("", context, out _);
             WriteObjectEndBytes(context);
         }
-
-
     }
 }

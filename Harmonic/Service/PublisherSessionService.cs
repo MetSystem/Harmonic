@@ -1,8 +1,6 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using Harmonic.Controllers.Living;
-using Harmonic.Networking.Rtmp.Messages;
+using System;
+using System.Collections.Generic;
 
 namespace Harmonic.Service
 {
@@ -33,6 +31,7 @@ namespace Harmonic.Service
                 _pathMapToSession.Remove(publishingName);
             }
         }
+
         public LivingStream FindPublisher(string publishingName)
         {
             if (_pathMapToSession.TryGetValue(publishingName, out var session))
@@ -41,6 +40,5 @@ namespace Harmonic.Service
             }
             return null;
         }
-
     }
 }

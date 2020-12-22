@@ -2,8 +2,6 @@
 using Harmonic.Networking.Amf.Serialization.Amf0;
 using Harmonic.Networking.Amf.Serialization.Amf3;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp.Serialization
 {
@@ -16,6 +14,5 @@ namespace Harmonic.Networking.Rtmp.Serialization
 
         public ByteBuffer WriteBuffer { get; internal set; } = null;
         public Memory<byte> ReadBuffer { get; internal set; } = null;
-
     }
 }

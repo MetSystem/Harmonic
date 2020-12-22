@@ -1,20 +1,10 @@
 ﻿using Autofac;
 using Fleck;
-using Harmonic.Buffers;
 using Harmonic.Controllers;
 using Harmonic.Hosting;
-using Harmonic.Networking.Amf.Serialization.Amf0;
-using Harmonic.Networking.Amf.Serialization.Amf3;
-using Harmonic.Networking.Rtmp.Messages;
-using Harmonic.Networking.Rtmp.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using Harmonic.Networking.Utils;
-using Harmonic.Networking.Rtmp.Data;
-using System.Linq;
 using Harmonic.Networking.Flv;
+using Harmonic.Networking.Rtmp.Data;
+using System;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -77,7 +67,7 @@ namespace Harmonic.Networking.WebSocket
                 _controller.OnConnect().ContinueWith(_ =>
                 {
                     _webSocketConnection.Close();
-                }, TaskContinuationOptions.OnlyOnFaulted); ;
+                }, TaskContinuationOptions.OnlyOnFaulted);
             }
             catch (Exception ex)
             {

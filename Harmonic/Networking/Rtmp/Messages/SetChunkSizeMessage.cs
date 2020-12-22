@@ -1,10 +1,7 @@
-﻿using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Text;
-using Harmonic.Networking.Rtmp.Data;
+﻿using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Serialization;
 using Harmonic.Networking.Utils;
+using System;
 
 namespace Harmonic.Networking.Rtmp.Messages
 {
@@ -15,7 +12,6 @@ namespace Harmonic.Networking.Rtmp.Messages
 
         public SetChunkSizeMessage() : base()
         {
-            
         }
 
         public override void Deserialize(SerializationContext context)
@@ -36,7 +32,6 @@ namespace Harmonic.Networking.Rtmp.Messages
             {
                 _arrayPool.Return(buffer);
             }
-            
         }
     }
 }

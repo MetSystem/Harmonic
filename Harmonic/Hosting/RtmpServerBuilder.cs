@@ -18,11 +18,12 @@ namespace Harmonic.Hosting
 
         private RtmpServerOptions _options = null;
 
-        public RtmpServerBuilder UseStartup<T>() where T: IStartup, new()
+        public RtmpServerBuilder UseStartup<T>() where T : IStartup, new()
         {
             _startup = new T();
             return this;
         }
+
         public RtmpServerBuilder UseSsl(X509Certificate2 cert)
         {
             _useSsl = true;
@@ -98,7 +99,7 @@ namespace Harmonic.Hosting
                     _websocketOptions.RegisterController<WebSocketPlayController>();
                 }
             }
-           
+
             if (_useSsl)
             {
                 _options.Cert = _cert;
@@ -108,6 +109,5 @@ namespace Harmonic.Hosting
             var ret = new RtmpServer(_options, _websocketOptions);
             return ret;
         }
-
     }
 }

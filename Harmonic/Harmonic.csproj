@@ -7,7 +7,7 @@
     <Authors>kyokunnodenwa</Authors>
     <Company>kyokunnodenwa</Company>
 
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -32,6 +32,6 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Fleck" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.IO.Pipelines" Version="4.7.0" />
+    <PackageReference Include="System.IO.Pipelines" Version="5.0.1" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,6 @@
 ﻿using Harmonic.Networking.Flv;
-using Harmonic.Networking.Rtmp;
 using Harmonic.Networking.WebSocket;
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Harmonic.Controllers
@@ -28,6 +24,7 @@ namespace Harmonic.Controllers
                 return _flvMuxer;
             }
         }
+
         public FlvDemuxer FlvDemuxer
         {
             get
@@ -39,6 +36,7 @@ namespace Harmonic.Controllers
                 return _flvDemuxer;
             }
         }
+
         public abstract Task OnConnect();
 
         public abstract void OnMessage(string msg);

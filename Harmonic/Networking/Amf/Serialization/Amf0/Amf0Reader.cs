@@ -1,7 +1,6 @@
 ﻿using Harmonic.Networking.Amf.Attributes;
 using Harmonic.Networking.Amf.Common;
 using Harmonic.Networking.Amf.Data;
-using Harmonic.Networking.Amf.Serialization.Amf3;
 using Harmonic.Networking.Amf.Serialization.Attributes;
 using Harmonic.Networking.Utils;
 using System;
@@ -36,6 +35,7 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
         };
 
         private delegate bool ReadDataHandler<T>(Span<byte> buffer, out T data, out int consumedLength);
+
         private delegate bool ReadDataHandler(Span<byte> buffer, out object data, out int consumedLength);
 
         private List<Type> _registeredTypes = new List<Type>();
@@ -73,6 +73,7 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
         {
             _referenceTable.Clear();
         }
+
         public void RegisterType<T>() where T : new()
         {
             var type = typeof(T);
@@ -296,6 +297,7 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
             bytesConsumed = length;
             return true;
         }
+
         public bool TryGetString(Span<byte> buffer, out string value, out int bytesConsumed)
         {
             value = default;
@@ -389,7 +391,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
 
             value = new AmfObject(obj);
             bytesConsumed = consumed + Amf0CommonValues.MARKER_LENGTH;
-
 
             return true;
         }
@@ -555,7 +556,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf0
                     obj.Add(kv.Key, kv.Value);
                 }
             }
-
 
             value = obj;
             consumedLength = consumed;

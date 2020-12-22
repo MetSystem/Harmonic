@@ -1,9 +1,6 @@
 ﻿using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp.Messages
 {
@@ -11,6 +8,7 @@ namespace Harmonic.Networking.Rtmp.Messages
     public sealed class AudioMessage : Message, ICloneable
     {
         public ReadOnlyMemory<byte> Data { get; private set; }
+
         public object Clone()
         {
             var ret = new AudioMessage

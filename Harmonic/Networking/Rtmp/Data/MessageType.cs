@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Harmonic.Networking.Rtmp.Data
+﻿namespace Harmonic.Networking.Rtmp.Data
 {
     public enum MessageType : byte
     {
@@ -14,11 +10,12 @@ namespace Harmonic.Networking.Rtmp.Data
         WindowAcknowledgementSize = 5,
         SetPeerBandwidth = 6,
 
-        #endregion
+        #endregion Protocol Control Messages
 
         UserControlMessages = 4,
 
         #region Rtmp Command Messages
+
         Amf0Command = 20,
         Amf3Command = 17,
         Amf0Data = 18,
@@ -28,9 +25,7 @@ namespace Harmonic.Networking.Rtmp.Data
         AudioMessage = 8,
         VideoMessage = 9,
         AggregateMessage = 22,
-        #endregion
 
-
-
+        #endregion Rtmp Command Messages
     }
 }

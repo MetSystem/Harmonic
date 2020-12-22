@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Buffers;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Harmonic.Networking
 {
-    static class StreamHelper
+    internal static class StreamHelper
     {
         public static byte[] ReadBytes(this Stream stream, int count)
         {

@@ -1,21 +1,22 @@
-﻿using Harmonic.Networking.Amf.Common;
+﻿using Harmonic.Networking.Amf.Attributes;
+using Harmonic.Networking.Amf.Common;
+using Harmonic.Networking.Amf.Data;
+using Harmonic.Networking.Amf.Serialization.Attributes;
+using Harmonic.Networking.Utils;
 using System;
-using System.Linq;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
-using Harmonic.Networking.Utils;
-using System.Buffers;
-using Harmonic.Networking.Amf.Data;
-using System.Reflection;
-using Harmonic.Networking.Amf.Attributes;
-using Harmonic.Networking.Amf.Serialization.Attributes;
 
 namespace Harmonic.Networking.Amf.Serialization.Amf3
 {
     public class Amf3Reader
     {
         private delegate bool ReaderHandler<T>(Span<byte> buffer, out T value, out int consumed);
+
         private delegate bool ReaderHandler(Span<byte> buffer, out object value, out int consumed);
 
         private List<object> _objectReferenceTable = new List<object>();
@@ -107,7 +108,7 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             _registeredTypedObejectStates.Add(mappedName, state);
         }
 
-        public void RegisterTypedObject<T>() where T: new()
+        public void RegisterTypedObject<T>() where T : new()
         {
             var type = typeof(T);
             var props = type.GetProperties();
@@ -300,6 +301,7 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                     dataBuffer[1] = (byte)(dataBuffer[0] << 6 | (dataBuffer[1] >> 1));
                     dataBuffer[0] = (byte)(dataBuffer[0] >> 2);
                     break;
+
                 case 2:
                     dataBuffer[1] = (byte)(0x7F & dataBuffer[1]);
                     dataBuffer[1] = (byte)(dataBuffer[0] << 7 | dataBuffer[1]);
@@ -317,8 +319,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                 consumed = bytesNeed;
                 return true;
             }
-
-
         }
 
         public bool TryGetDouble(Span<byte> buffer, out double value, out int consumed)
@@ -334,6 +334,7 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             consumed = Amf3CommonValues.MARKER_LENGTH + sizeof(double);
             return true;
         }
+
         public bool TryGetString(Span<byte> buffer, out string value, out int consumed)
         {
             value = default;
@@ -381,7 +382,7 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             {
                 referenceTable.Add(value as T);
             }
-            
+
             return true;
         }
 
@@ -891,7 +892,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             consumed += sizeof(int);
             buffer = buffer.Slice(sizeof(int));
             return true;
-
         }
 
         private bool TryGetUIntVectorData(ref Span<byte> buffer, Vector<uint> vector, ref int consumed)
@@ -910,7 +910,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             consumed += sizeof(double);
             buffer = buffer.Slice(sizeof(double));
             return true;
-
         }
 
         private bool TryGetReference<T, TTableEle>(uint header, List<TTableEle> referenceTable, out uint headerData, out T value, out bool isRef)

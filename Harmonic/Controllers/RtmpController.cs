@@ -1,9 +1,6 @@
 ﻿using Harmonic.Networking.Flv;
 using Harmonic.Networking.Rtmp;
 using Harmonic.Rpc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Harmonic.Controllers
 {
@@ -12,7 +9,6 @@ namespace Harmonic.Controllers
         public RtmpMessageStream MessageStream { get; internal set; } = null;
         public RtmpChunkStream ChunkStream { get; internal set; } = null;
         public RtmpSession RtmpSession { get; internal set; } = null;
-
 
         private FlvMuxer _flvMuxer = null;
         private FlvDemuxer _flvDemuxer = null;
@@ -28,6 +24,7 @@ namespace Harmonic.Controllers
                 return _flvMuxer;
             }
         }
+
         public FlvDemuxer FlvDemuxer
         {
             get

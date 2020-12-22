@@ -1,8 +1,4 @@
 ﻿using Harmonic.Networking.Rtmp.Serialization;
-using Harmonic.Networking.Rtmp.Messages;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp.Messages.Commands
 {
@@ -11,6 +7,7 @@ namespace Harmonic.Networking.Rtmp.Messages.Commands
     {
         [OptionalArgument]
         public string PublishingName { get; set; }
+
         [OptionalArgument]
         public string PublishingType { get; set; }
 

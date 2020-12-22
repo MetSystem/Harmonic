@@ -9,6 +9,7 @@ namespace Harmonic.Rpc
         {
             Key = key;
         }
+
         public string Key { get; set; } = null;
     }
 }

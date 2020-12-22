@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
 namespace Harmonic.Service
 {
@@ -18,6 +15,5 @@ namespace Harmonic.Service
         {
             return Path.Combine(_configuration.RecordPath, _configuration.FilenameFormat.Replace("{streamName}", streamName));
         }
-
     }
 }

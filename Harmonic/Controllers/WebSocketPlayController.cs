@@ -1,14 +1,10 @@
 ﻿using Harmonic.Networking;
 using Harmonic.Networking.Rtmp.Messages;
 using Harmonic.Service;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -124,6 +120,7 @@ namespace Harmonic.Controllers
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
@@ -153,6 +150,7 @@ namespace Harmonic.Controllers
             Dispose(true);
             // GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion IDisposable Support
     }
 }

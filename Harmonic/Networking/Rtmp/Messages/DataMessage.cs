@@ -1,10 +1,7 @@
 ﻿using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Serialization;
-using Harmonic.Networking.Rtmp.Messages;
-using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp.Messages
 {
@@ -12,6 +9,7 @@ namespace Harmonic.Networking.Rtmp.Messages
     public class DataMessage : Message
     {
         public List<object> Data { get; set; }
+
         public DataMessage(AmfEncodingVersion encoding) : base()
         {
             MessageHeader.MessageType = encoding == AmfEncodingVersion.Amf0 ? MessageType.Amf0Data : MessageType.Amf3Data;
@@ -32,7 +30,6 @@ namespace Harmonic.Networking.Rtmp.Messages
                     Data.Add(data);
                     span = span.Slice(consumed);
                 }
-
             }
             else
             {
@@ -46,7 +43,6 @@ namespace Harmonic.Networking.Rtmp.Messages
                     span = span.Slice(consumed);
                 }
             }
-
         }
 
         public override void Serialize(SerializationContext context)

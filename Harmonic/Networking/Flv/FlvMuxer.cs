@@ -4,8 +4,6 @@ using Harmonic.Networking.Amf.Serialization.Amf3;
 using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Harmonic.Networking.Flv
 {
@@ -63,7 +61,6 @@ namespace Harmonic.Networking.Flv
                 buffer.AsSpan().Clear();
                 dataBuffer.WriteToBuffer(buffer.AsSpan(0, 3));
                 dataBuffer.WriteToBuffer(bodyBuffer);
-               
             }
             else
             {

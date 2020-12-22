@@ -3,7 +3,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
@@ -16,11 +15,15 @@ namespace Harmonic.Buffers
         private int _bufferEnd = 0;
         private int _bufferStart = 0;
         private readonly int _maxiumBufferSize = 0;
+
         private event Action _memoryUnderLimit;
+
         private event Action _dataWritten;
+
         private object _sync = new object();
         private ArrayPool<byte> _arrayPool;
         public int BufferSegmentSize { get; }
+
         public int Length
         {
             get
@@ -122,7 +125,8 @@ namespace Harmonic.Buffers
             }
             _dataWritten?.Invoke();
         }
-        class _source : IValueTaskSource
+
+        private class _source : IValueTaskSource
         {
             private static readonly Action<object> CallbackCompleted = _ => { Debug.Assert(false, "Should not be invoked"); };
 
@@ -141,6 +145,7 @@ namespace Harmonic.Buffers
             {
                 status = ValueTaskSourceStatus.Canceled;
             }
+
             public void Success()
             {
                 status = ValueTaskSourceStatus.Succeeded;
@@ -413,6 +418,7 @@ namespace Harmonic.Buffers
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
@@ -440,6 +446,7 @@ namespace Harmonic.Buffers
             Dispose(true);
             // GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion IDisposable Support
     }
 }

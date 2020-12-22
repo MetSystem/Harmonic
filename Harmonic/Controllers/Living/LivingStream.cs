@@ -9,7 +9,6 @@ using Harmonic.Rpc;
 using Harmonic.Service;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Harmonic.Controllers.Living
@@ -22,8 +21,11 @@ namespace Harmonic.Controllers.Living
         public DataMessage FlvMetadata = null;
         public AudioMessage AACConfigureRecord = null;
         public VideoMessage AVCConfigureRecord = null;
+
         public event Action<VideoMessage> OnVideoMessage;
+
         public event Action<AudioMessage> OnAudioMessage;
+
         private RtmpChunkStream _videoChunkStream = null;
         private RtmpChunkStream _audioChunkStream = null;
 
@@ -95,7 +97,7 @@ namespace Harmonic.Controllers.Living
         private async void SendVideo(VideoMessage message)
         {
             var video = message.Clone() as VideoMessage;
-            
+
             try
             {
                 await MessageStream.SendMessageAsync(_videoChunkStream, video);
@@ -198,6 +200,7 @@ namespace Harmonic.Controllers.Living
                 disposedValue = true;
             }
         }
-        #endregion
+
+        #endregion Disposable Support
     }
 }

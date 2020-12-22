@@ -1,17 +1,11 @@
 ﻿using Autofac;
 using Harmonic.Controllers;
 using Harmonic.Networking.Amf.Common;
-using Harmonic.Networking.Rtmp.Data;
-using Harmonic.Networking.Rtmp.Messages;
 using Harmonic.Networking.Rtmp.Messages.Commands;
-using Harmonic.Networking.Rtmp.Serialization;
-using Harmonic.Rpc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Harmonic.Networking.Rtmp
 {
@@ -94,7 +88,6 @@ namespace Harmonic.Networking.Rtmp
                         prop.SetValue(_rtmpSession.ConnectionInformation, commandObjectValue);
                     }
                 }
-
             }
             if (_rtmpSession.FindController(_rtmpSession.ConnectionInformation.App, out var controllerType))
             {
@@ -117,7 +110,6 @@ namespace Harmonic.Networking.Rtmp
                     { "capabilities", 255.00 },
                     { "fmsVer", "FMS/4,5,1,484" },
                     { "mode", 1.0 }
-
                 };
             msg.ReturnValue = param;
             msg.IsSuccess = true;
@@ -136,7 +128,6 @@ namespace Harmonic.Networking.Rtmp
             {
                 _netStreams.Remove(stream.MessageStream.MessageStreamId);
             }
-            
         }
 
         internal void AddMessageStream(uint id, NetStream stream)
@@ -155,8 +146,8 @@ namespace Harmonic.Networking.Rtmp
             }
         }
 
-
         #region IDisposable Support
+
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
@@ -193,8 +184,7 @@ namespace Harmonic.Networking.Rtmp
             Dispose(true);
             // GC.SuppressFinalize(this);
         }
-        #endregion
 
-
+        #endregion IDisposable Support
     }
 }

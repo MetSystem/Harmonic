@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp.Data
 {
-    public class MessageHeader: ICloneable
+    public class MessageHeader : ICloneable
     {
         public uint Timestamp { get; set; }
         public uint MessageLength { get; internal set; }

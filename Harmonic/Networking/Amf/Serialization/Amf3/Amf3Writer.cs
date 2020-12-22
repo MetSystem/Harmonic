@@ -1,24 +1,24 @@
-﻿using Harmonic.Networking.Amf.Common;
+﻿using Harmonic.Networking.Amf.Attributes;
+using Harmonic.Networking.Amf.Common;
+using Harmonic.Networking.Amf.Data;
+using Harmonic.Networking.Amf.Serialization.Attributes;
+using Harmonic.Networking.Utils;
 using System;
-using System.Linq;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
-using System.IO;
-using Harmonic.Buffers;
-using Harmonic.Networking.Utils;
-using Harmonic.Networking.Amf.Data;
-using System.Diagnostics.Contracts;
-using System.Reflection;
-using Harmonic.Networking.Amf.Attributes;
-using Harmonic.Networking.Amf.Serialization.Attributes;
 
 namespace Harmonic.Networking.Amf.Serialization.Amf3
 {
     public class Amf3Writer
     {
         private delegate void WriteHandler<T>(T value, SerializationContext context);
+
         private delegate void WriteHandler(object value, SerializationContext context);
 
         private ArrayPool<byte> _arrayPool = ArrayPool<byte>.Shared;
@@ -31,7 +31,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
 
         public Amf3Writer()
         {
-
             var writeHandlers = new Dictionary<Type, WriteHandler>
             {
                 [typeof(int)] = WriteHandlerWrapper<double>(WriteBytes),
@@ -62,7 +61,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
 
             Action<Amf3Dictionary<int, int>, SerializationContext> dictMethod = WriteBytes;
             _writeDictionaryTMethod = dictMethod.Method.GetGenericMethodDefinition();
-
         }
 
         private void WrapVector(object value, SerializationContext context)
@@ -102,7 +100,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                 {
                     handler((T)Convert.ChangeType(obj, typeof(T)), context);
                 }
-
             };
         }
 
@@ -132,7 +129,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             {
                 context.Buffer.WriteToBuffer((byte)Amf3Type.False);
             }
-
         }
 
         private void WriteU29BytesImpl(uint value, SerializationContext context)
@@ -171,23 +167,25 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                         context.Buffer.WriteToBuffer((byte)(arr[2] | 0x80));
                         context.Buffer.WriteToBuffer(arr[3]);
                         break;
+
                     case 3:
                         context.Buffer.WriteToBuffer((byte)(arr[1] << 2 | ((arr[2]) >> 6) | 0x80));
                         context.Buffer.WriteToBuffer((byte)(arr[2] << 1 | ((arr[3]) >> 7) | 0x80));
                         context.Buffer.WriteToBuffer((byte)(arr[3] & 0x7F));
                         break;
+
                     case 2:
                         context.Buffer.WriteToBuffer((byte)(arr[2] << 1 | ((arr[3]) >> 7) | 0x80));
                         context.Buffer.WriteToBuffer((byte)(arr[3] & 0x7F));
                         break;
+
                     case 1:
                         context.Buffer.WriteToBuffer((byte)(arr[3]));
                         break;
+
                     default:
                         throw new ApplicationException();
-
                 }
-
             }
             finally
             {
@@ -215,7 +213,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             {
                 _arrayPool.Return(backend);
             }
-
         }
 
         private void WriteStringBytesImpl<T>(string value, SerializationContext context, List<T> referenceTable)
@@ -301,7 +298,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             {
                 _arrayPool.Return(backend);
             }
-
         }
 
         public void WriteBytes(Amf3Xml xml, SerializationContext context)
@@ -364,8 +360,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                     WriteBytes(value, context);
                 }
             }
-
-
         }
 
         public void WriteBytes(object value, SerializationContext context)
@@ -437,7 +431,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             }
             context.ObjectReferenceTable.Add(value);
 
-
             var traitRefIndex = context.ObjectTraitsReferenceTable.IndexOf(traits);
             if (traitRefIndex >= 0)
             {
@@ -474,7 +467,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                 }
                 context.ObjectTraitsReferenceTable.Add(traits);
             }
-
 
             foreach (var memberValue in memberValues)
             {
@@ -547,7 +539,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                 var buffer = _arrayPool.Rent(sizeof(int));
                 try
                 {
-
                     foreach (var i in value)
                     {
                         var contractRet = NetworkBitConverter.TryGetBytes(i, buffer);
@@ -633,7 +624,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                 }
                 return;
             }
-
         }
 
         public void WriteBytes(Amf3Array value, SerializationContext context)
@@ -695,6 +685,5 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
                 return;
             }
         }
-
     }
 }

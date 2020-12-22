@@ -1,8 +1,4 @@
-﻿using Harmonic.Networking.Rtmp.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Harmonic.Networking.Rtmp
 {
@@ -25,10 +21,10 @@ namespace Harmonic.Networking.Rtmp
 
         protected RtmpChunkStream()
         {
-
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
@@ -53,7 +49,7 @@ namespace Harmonic.Networking.Rtmp
             Dispose(true);
             // GC.SuppressFinalize(this);
         }
-        #endregion
 
+        #endregion IDisposable Support
     }
 }

@@ -1,18 +1,13 @@
 ﻿using Harmonic.Networking.Amf.Common;
 using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Serialization;
-using Harmonic.Networking.Rtmp.Messages;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp.Messages.Commands
 {
-
     [RtmpMessage(MessageType.Amf3Command, MessageType.Amf0Command)]
     public abstract class CommandMessage : Message
     {
@@ -57,6 +52,7 @@ namespace Harmonic.Networking.Rtmp.Messages.Commands
                 }
             }
         }
+
         public void DeserializeAmf3(SerializationContext context)
         {
             var buffer = context.ReadBuffer.Span;

@@ -1,6 +1,3 @@
-
-
-using Harmonic.Networking.Rtmp.Messages.Commands;
 using Harmonic.Networking.Rtmp.Messages;
 
 namespace Harmonic.Networking
@@ -14,7 +11,7 @@ namespace Harmonic.Networking
         public bool Fpad { get; set; }
         public int AudioCodecs { get; set; }
         public int VideoCodecs { get; set; }
-        int VideoFunction { get; set; }
+        private int VideoFunction { get; set; }
         public string PageUrl { get; set; }
         public AmfEncodingVersion AmfEncodingVersion { get; set; }
     }

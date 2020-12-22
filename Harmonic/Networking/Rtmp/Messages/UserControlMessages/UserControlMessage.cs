@@ -1,10 +1,5 @@
-﻿using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Text;
-using Harmonic.Networking.Rtmp.Data;
+﻿using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Serialization;
-using Harmonic.Networking.Utils;
 
 namespace Harmonic.Networking.Rtmp.Messages.UserControlMessages
 {
@@ -27,7 +22,5 @@ namespace Harmonic.Networking.Rtmp.Messages.UserControlMessages
         public UserControlMessage() : base()
         {
         }
-        
     }
-
 }

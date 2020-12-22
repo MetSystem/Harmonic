@@ -1,16 +1,11 @@
-﻿using Harmonic.Buffers;
-using Harmonic.Networking.Utils;
+﻿using Harmonic.Networking.Utils;
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Harmonic.Networking.Rtmp
 {
-    sealed class HandshakeContext : IDisposable
+    internal sealed class HandshakeContext : IDisposable
     {
         private uint _readerTimestampEpoch = 0;
         private uint _writerTimestampEpoch = 0;
@@ -118,8 +113,6 @@ namespace Harmonic.Networking.Rtmp
                 _s1Data = null;
                 Dispose();
             }
-
         }
-
     }
 }

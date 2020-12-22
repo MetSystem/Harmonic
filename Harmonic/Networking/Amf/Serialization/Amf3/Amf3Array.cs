@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Harmonic.Networking.Amf.Serialization.Amf3
 {
@@ -10,7 +7,6 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
         public Dictionary<string, object> SparsePart { get; set; } = new Dictionary<string, object>();
         public List<object> DensePart { get; set; } = new List<object>();
 
-        
         public object this[string key]
         {
             get

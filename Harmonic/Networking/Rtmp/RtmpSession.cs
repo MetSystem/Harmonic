@@ -3,17 +3,14 @@ using Harmonic.Controllers;
 using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Messages;
 using Harmonic.Networking.Rtmp.Messages.Commands;
-using Harmonic.Networking;
 using Harmonic.Rpc;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Harmonic.Networking.Rtmp
 {
@@ -53,6 +50,7 @@ namespace Harmonic.Networking.Rtmp
         {
             Debug.Assert(_messageStreams.ContainsKey(msid));
         }
+
         internal uint MakeUniqueMessageStreamId()
         {
             // TBD use uint.MaxValue
@@ -81,10 +79,9 @@ namespace Harmonic.Networking.Rtmp
                 _allocatedCsid.Add(next, next);
                 return next;
             }
-            
         }
 
-        public T CreateNetStream<T>() where T: NetStream
+        public T CreateNetStream<T>() where T : NetStream
         {
             var ret = IOPipeline.Options.ServerLifetime.Resolve<T>();
             ret.MessageStream = CreateMessageStream();
@@ -107,7 +104,7 @@ namespace Harmonic.Networking.Rtmp
             }
         }
 
-        public T CreateCommandMessage<T>() where T: CommandMessage
+        public T CreateCommandMessage<T>() where T : CommandMessage
         {
             var ret = Activator.CreateInstance(typeof(T), ConnectionInformation.AmfEncodingVersion);
             return ret as T;
@@ -294,6 +291,7 @@ namespace Harmonic.Networking.Rtmp
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
@@ -320,6 +318,7 @@ namespace Harmonic.Networking.Rtmp
             Dispose(true);
             // GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion IDisposable Support
     }
 }

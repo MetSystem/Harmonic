@@ -1,15 +1,10 @@
-﻿using Autofac;
+﻿using Fleck;
 using Harmonic.Networking.Rtmp;
-using Harmonic.Service;
+using Harmonic.Networking.WebSocket;
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Fleck;
-using Harmonic.Networking.WebSocket;
 
 namespace Harmonic.Hosting
 {
@@ -34,10 +29,9 @@ namespace Harmonic.Hosting
             if (webSocketOptions != null)
             {
                 _webSocketServer = new WebSocketServer($"{(options.Cert == null ? "ws" : "wss")}://{webSocketOptions.BindEndPoint.ToString()}");
-                
             }
-
         }
+
         public Task StartAsync(CancellationToken ct = default)
         {
             if (Started)
@@ -102,6 +96,7 @@ namespace Harmonic.Hosting
             t.Start();
             return ret.Task;
         }
+
         private async void AcceptCallback(IAsyncResult ar, CancellationToken ct)
         {
             Socket listener = (Socket)ar.AsyncState;

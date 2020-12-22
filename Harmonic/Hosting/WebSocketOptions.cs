@@ -3,7 +3,6 @@ using Harmonic.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Harmonic.Hosting
@@ -22,9 +21,19 @@ namespace Harmonic.Hosting
             _controllers.Add(typeof(T).Name.Replace("Controller", "").ToLower(), typeof(T));
         }
 
-        public void RegisterController<T>() where T: WebSocketController
+        public void RegisterController<T>() where T : WebSocketController
         {
             RegisterController(typeof(T));
+        }
+
+        public void RegisterAction(Action<ContainerBuilder> action)
+        {
+            if (action == null)
+            {
+                return;
+            }
+
+            action(_serverOptions._builder);
         }
 
         internal void RegisterController(Type controllerType)
@@ -36,6 +45,5 @@ namespace Harmonic.Hosting
             _controllers.Add(controllerType.Name.Replace("Controller", "").ToLower(), controllerType);
             _serverOptions._builder.RegisterType(controllerType).AsSelf();
         }
-
     }
 }

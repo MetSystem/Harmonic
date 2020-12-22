@@ -4,7 +4,6 @@ using Harmonic.Networking.Utils;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp.Messages.UserControlMessages
 {
@@ -12,7 +11,7 @@ namespace Harmonic.Networking.Rtmp.Messages.UserControlMessages
     {
         public Dictionary<UserControlEventType, Type> _messageFactories = new Dictionary<UserControlEventType, Type>();
 
-        public void RegisterMessage<T>() where T: UserControlMessage, new()
+        public void RegisterMessage<T>() where T : UserControlMessage, new()
         {
             var tType = typeof(T);
             var attr = tType.GetCustomAttribute<UserControlMessageAttribute>();

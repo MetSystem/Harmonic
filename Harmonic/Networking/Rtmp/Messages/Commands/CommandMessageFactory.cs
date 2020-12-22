@@ -1,13 +1,10 @@
 ﻿using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Messages.Commands;
 using Harmonic.Networking.Rtmp.Serialization;
-using Harmonic.Networking.Utils;
-using Harmonic.Networking.Rtmp.Messages;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
-using System.Text;
 
 namespace Harmonic.Networking.Rtmp.Messages.UserControlMessages
 {
@@ -28,10 +25,9 @@ namespace Harmonic.Networking.Rtmp.Messages.UserControlMessages
             RegisterMessage<ReceiveAudioCommandMessage>();
             RegisterMessage<ReceiveVideoCommandMessage>();
             RegisterMessage<SeekCommandMessage>();
-
         }
 
-        public void RegisterMessage<T>() where T: CommandMessage
+        public void RegisterMessage<T>() where T : CommandMessage
         {
             var tType = typeof(T);
             var attr = tType.GetCustomAttribute<RtmpCommandAttribute>();

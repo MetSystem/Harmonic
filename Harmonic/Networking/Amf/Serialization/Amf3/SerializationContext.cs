@@ -1,7 +1,6 @@
 ﻿using Harmonic.Buffers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Harmonic.Networking.Amf.Serialization.Amf3
 {
@@ -41,6 +40,5 @@ namespace Harmonic.Networking.Amf.Serialization.Amf3
             ObjectTraitsReferenceTable.Clear();
             Buffer.TakeOutMemory(buffer);
         }
-
     }
 }

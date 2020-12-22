@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Harmonic.Controllers;
-using Harmonic.Controllers.Living;
 using Harmonic.Networking.Rtmp;
 using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Messages;
@@ -13,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Harmonic.Hosting
@@ -22,11 +20,14 @@ namespace Harmonic.Hosting
     {
         internal Dictionary<MessageType, MessageFactory> _messageFactories = new Dictionary<MessageType, MessageFactory>();
         public IReadOnlyDictionary<MessageType, MessageFactory> MessageFactories => _messageFactories;
+
         public delegate Message MessageFactory(MessageHeader header, Networking.Rtmp.Serialization.SerializationContext context, out int consumed);
+
         private Dictionary<string, Type> _registeredControllers = new Dictionary<string, Type>();
         internal ContainerBuilder _builder = null;
         private RpcService _rpcService = null;
         internal IStartup _startup = null;
+
         internal IStartup Startup
         {
             get
@@ -41,6 +42,7 @@ namespace Harmonic.Hosting
                 RegisterCommonServices(_builder);
             }
         }
+
         internal IContainer ServiceContainer { get; private set; }
         internal ILifetimeScope ServerLifetime { get; private set; }
 
@@ -122,6 +124,7 @@ namespace Harmonic.Hosting
             _rpcService.RegeisterController(controllerType);
             _builder.RegisterType(controllerType).AsSelf();
         }
+
         internal void RegisterStream(Type streamType)
         {
             if (!typeof(NetStream).IsAssignableFrom(streamType))
@@ -136,6 +139,7 @@ namespace Harmonic.Hosting
         {
             _rpcService.CleanupRegistration();
         }
+
         private void RegisterCommonServices(ContainerBuilder builder)
         {
             builder.Register(c => new RecordServiceConfiguration())
@@ -155,6 +159,7 @@ namespace Harmonic.Hosting
         {
             RegisterController(typeof(T), appName);
         }
+
         internal void RegisterStream<T>() where T : NetStream
         {
             RegisterStream(typeof(T));

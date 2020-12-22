@@ -1,24 +1,19 @@
-﻿using Harmonic.Networking.Flv;
-using Harmonic.Networking.Amf.Common;
-using Harmonic.Networking.Amf.Serialization.Amf0;
-using Harmonic.Networking.Amf.Serialization.Amf3;
+﻿using Harmonic.Networking.Amf.Common;
+using Harmonic.Networking.Flv;
+using Harmonic.Networking.Flv.Data;
 using Harmonic.Networking.Rtmp;
 using Harmonic.Networking.Rtmp.Data;
 using Harmonic.Networking.Rtmp.Messages;
 using Harmonic.Networking.Rtmp.Messages.Commands;
 using Harmonic.Networking.Rtmp.Messages.UserControlMessages;
 using Harmonic.Networking.Rtmp.Streaming;
-using Harmonic.Networking.Utils;
 using Harmonic.Rpc;
 using Harmonic.Service;
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Harmonic.Networking.Flv.Data;
 
 namespace Harmonic.Controllers.Record
 {
@@ -90,7 +85,6 @@ namespace Harmonic.Controllers.Record
         {
             _recordService = recordService;
         }
-
 
         [RpcMethod(Name = "publish")]
         public async Task Publish([FromOptionalArgument] string streamName, [FromOptionalArgument] string publishingType)
@@ -306,7 +300,6 @@ namespace Harmonic.Controllers.Record
             Interlocked.Exchange(ref _playing, 1);
             try
             {
-
                 _recordFile.Seek(9, SeekOrigin.Begin);
                 FlvDemuxer.SeekNoLock(milliSeconds, _metaData == null ? null : _metaData.Data[2] as Dictionary<string, object>, ct);
                 await StartPlayNoLock(ct);
