@@ -97,3 +97,14 @@ ffplay "rtmp://127.0.0.1/living/streamName"
 # Dive in deep
 You can view docs [here](docs/README.md)
 
+# ffmpeg push & pull
+```
+ffmpeg 
+ -re 
+ -rtsp_transport tcp
+ -r 25
+ -vcodec copy
+ -acodec aac mp3->aac
+ -s 1280x720
+```
+
