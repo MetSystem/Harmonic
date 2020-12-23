@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PowerStreamServer
@@ -13,11 +14,13 @@ namespace PowerStreamServer
     internal class PowerSmartController : WebSocketPlayController
     {
         private IStreamService StreamService;
+        private PowerOptions PowerOption { get; set; }
 
-        public PowerSmartController(PublisherSessionService publisherSessionService, RecordService recordService, IStreamService streamService)
+        public PowerSmartController(PublisherSessionService publisherSessionService, RecordService recordService, IStreamService streamService, PowerOptions option)
             : base(publisherSessionService, recordService)
         {
             this.StreamService = streamService;
+            this.PowerOption = option;
         }
 
         public override Task OnConnect()
@@ -29,7 +32,7 @@ namespace PowerStreamServer
                 result = !ffmpegProcess.PID.HasValue;
                 if (ffmpegProcess.PID.HasValue)
                 {
-                     var hasProcess = Process.GetProcessesByName("ffmpeg")?.FirstOrDefault(t=>t.Id == ffmpegProcess.PID.Value);
+                    var hasProcess = Process.GetProcessesByName("ffmpeg")?.FirstOrDefault(t => t.Id == ffmpegProcess.PID.Value);
                     if (hasProcess == null)
                     {
                         ffmpegProcess.PID = null;
@@ -51,6 +54,7 @@ namespace PowerStreamServer
             if (ffmpegProcess == null || result)
             {
                 StreamService.Send(this.StreamName);
+                Thread.Sleep(PowerOption.WaitTime * 1000);
             }
 
             return base.OnConnect();

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Harmonic.Networking.WebSocket;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Tianyi;
 using Xabe.FFmpeg;
 
@@ -8,47 +11,70 @@ namespace PowerStreamServer
 {
     public class TykdStreamService : IStreamService
     {
-        private PowerOptions powerOption;
-        private TianyiService tyService;
+        private static object lockObj = new object();
+        private PowerOptions PowerOption { get; set; }
+        private TianyiService TyService { get; set; }
 
         public TykdStreamService(PowerOptions option, TianyiService service)
         {
-            powerOption = option;
-            tyService = service;
+            PowerOption = option;
+            TyService = service;
         }
 
         public void Send(string streamName)
         {
             var data = Power.FFmpegProcessList.FirstOrDefault(t => t.StreamName == streamName);
-            
+            if (!(data == null || data.CreateTime == DateTime.MinValue))
+            {
+                if (data.CreateTime.AddSeconds(PowerOption.WaitTime) > DateTime.Now)
+                {
+                    return;
+                }
+            }
+            Monitor.Enter(lockObj);
+            data = Power.FFmpegProcessList.FirstOrDefault(t => t.StreamName == streamName);
+            if (!(data == null || !data.PID.HasValue))
+            {
+                return;
+            }
+            string globalParam = PowerOption.Sources.GlobalParam;
+            string inputParam = PowerOption.Sources.InputParam;
+            string outputParam = PowerOption.Sources.OutputParam;
+            string outputLink = PowerOption.Sources.ForwardLink;
+            string soruceLink = TyService.GetExtGetPlayUrlHX(streamName, 0);
 
-            string globalParam = powerOption.Sources.GlobalParam;
-            string inputParam = powerOption.Sources.InputParam;
-            string outputParam = powerOption.Sources.OutputParam;
-            string outputLink = powerOption.Sources.ForwardLink;
+            IConversion iConversion = FFmpeg.Conversions.New();
+            iConversion.OnDataReceived += IConversion_OnDataReceived;
+            Console.WriteLine($"ffmpeg {globalParam} {inputParam} -i \"{soruceLink}\" {outputParam} \"{outputLink}{streamName}\"");
             data = new StreamConnection()
             {
                 LastActiveTime = DateTime.Now,
                 StreamName = streamName,
-                WsConnection = new System.Collections.Generic.List<Harmonic.Networking.WebSocket.WebSocketSession>()
+                WsConnection = new List<WebSocketSession>()
             };
-            string soruceLink = tyService.GetExtGetPlayUrlHX(streamName, 0);
-
             Power.FFmpegProcessList.Add(data);
-            IConversion iConversion = FFmpeg.Conversions.New();
-            iConversion.OnDataReceived += IConversion_OnDataReceived;
-            Console.WriteLine($"ffmpeg {globalParam} {inputParam} -i {soruceLink} {outputParam} {outputLink}{streamName}");
-            iConversion.Start($"{globalParam} {inputParam} -i {soruceLink} {outputParam} {outputLink}{streamName}", t =>
+            iConversion.Start($"{globalParam} {inputParam} -i \"{soruceLink}\" {outputParam} \"{outputLink}{streamName}\"", t =>
             {
                 data.PID = t;
                 data.LastActiveTime = DateTime.Now;
                 Console.WriteLine($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}]FFmpeg流推送到：\n{outputLink}{streamName}\n进程ID为：{ data.PID }\n-----------------");
             });
+
+            // 检测是否开启FFmpeg进程
+            while (!data.PID.HasValue)
+            {
+                Thread.Sleep(3000);
+            }
+            data.CreateTime = DateTime.Now;
+            Monitor.Exit(lockObj);
         }
 
         private void IConversion_OnDataReceived(object sender, DataReceivedEventArgs e)
         {
-            Console.WriteLine(e.Data);
+            if (PowerOption.FFmpegLog)
+            {
+                Console.WriteLine(e.Data);
+            }
         }
     }
 }

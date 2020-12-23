@@ -14,9 +14,15 @@
         /// 视频源
         /// </summary>
         public SourceOption Sources { get; set; }
+        public bool FFmpegLog { get; set; }
         public string StreamType { get; set; }
         public string? FFmpegConfig { get; set; }
         public bool FFmpegDisplay { get; set; }
+
+        /// <summary>
+        /// 等待时间
+        /// </summary>
+        public int WaitTime { get; set; }
     }
 
     public class SourceOption

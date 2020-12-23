@@ -22,5 +22,6 @@ namespace PowerStreamServer
         public List<WebSocketSession> WsConnection { get; set; }
 
         public DateTime LastActiveTime { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 }

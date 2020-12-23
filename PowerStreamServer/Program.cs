@@ -17,7 +17,13 @@ namespace PowerStreamServer
         private static async Task Main(string[] args)
         {
             var powerOptions = Power.Configuration.GetSection("Server").Get<PowerOptions>();
-            FFmpeg.SetExecutablesPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FFmpeg"));
+            var executablesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FFmpeg");
+            if (!string.IsNullOrEmpty(powerOptions.FFmpegPath))
+            {
+                executablesPath = powerOptions.FFmpegPath;
+            }
+
+            FFmpeg.SetExecutablesPath(executablesPath);
             RtmpServer server = new RtmpServerBuilder()
                 .UseStartup<Startup>()
                 .UseWebSocket(c =>

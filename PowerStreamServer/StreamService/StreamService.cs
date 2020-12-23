@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Xabe.FFmpeg;
 
 namespace PowerStreamServer
 {
     public class StreamService : IStreamService
     {
+        private static object lockObj = new object();
         private PowerOptions PowerOption;
 
         public StreamService(PowerOptions option)
@@ -15,6 +18,7 @@ namespace PowerStreamServer
 
         public void Send(string streamName)
         {
+            Monitor.Enter(lockObj);
             var streamInfo = PowerOption.Sources.Data.FirstOrDefault(t => t.Name == streamName);
 
             var globalParam = string.IsNullOrEmpty(streamInfo.GlobalParam) ? PowerOption.Sources.GlobalParam : streamInfo.GlobalParam;
@@ -24,7 +28,7 @@ namespace PowerStreamServer
             var outputLink = string.IsNullOrEmpty(streamInfo.ForwardLink) ? PowerOption.Sources.ForwardLink : streamInfo.ForwardLink;
 
             var data = Power.FFmpegProcessList.FirstOrDefault(t => t.StreamName == streamName);
-            if (!(data == null || data.LastActiveTime == DateTime.MinValue))
+            if (!(data == null || data.PID == null || data.LastActiveTime == DateTime.MinValue))
             {
                 data.LastActiveTime = DateTime.Now;
                 return;
@@ -36,12 +40,25 @@ namespace PowerStreamServer
                 StreamName = streamName,
                 WsConnection = new System.Collections.Generic.List<Harmonic.Networking.WebSocket.WebSocketSession>()
             };
+
+            Power.FFmpegProcessList.Add(data);
             IConversion iConversion = FFmpeg.Conversions.New();
-            iConversion.Start($"{globalParam} {inputParam} -i {soruceLink} {outputParam} {outputLink}{streamName}",t=> {
+            iConversion.OnDataReceived += IConversion_OnDataReceived;
+            Console.WriteLine($"ffmpeg {globalParam} {inputParam} -i \"{soruceLink}\" {outputParam} \"{outputLink}{streamName}\"");
+            iConversion.Start($"{globalParam} {inputParam} -i \"{soruceLink}\" {outputParam} \"{outputLink}{streamName}\"", t =>
+            {
                 data.PID = t;
                 data.LastActiveTime = DateTime.Now;
-                Console.WriteLine($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}]FFmpeg流推送到：\n{outputLink}{streamName}\n进程ID为：{ data.PID }\n-----------------");
+                Console.WriteLine($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}]FFmpeg进程ID为：{ data.PID }-----------------");
             });
+            Monitor.Exit(lockObj);
+        }
+        private void IConversion_OnDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (PowerOption.FFmpegLog)
+            {
+                Console.WriteLine(e.Data);
+            }
         }
     }
 }

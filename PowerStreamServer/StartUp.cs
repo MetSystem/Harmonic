@@ -14,11 +14,11 @@ namespace PowerStreamServer
             builder.RegisterType<PowerSmartController>().AsSelf();
             if (powerOptions.StreamType == "Defualt")
             {
-                builder.RegisterType<TykdStreamService>().As<IStreamService>();
+                builder.RegisterType<StreamService>().As<IStreamService>();
             }
             if (powerOptions.StreamType == "Tykd")
             {
-                builder.RegisterType<StreamService>().As<IStreamService>();
+                builder.RegisterType<TykdStreamService>().As<IStreamService>();
             }
             builder.RegisterInstance<PowerOptions>(powerOptions);
             builder.RegisterInstance<TianyiService>(new TianyiService(tianyiOptions.AppKey, tianyiOptions.AppSecret, tianyiOptions.Account));
