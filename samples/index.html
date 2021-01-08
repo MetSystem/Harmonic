@@ -1,52 +1,79 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="overflow:hidden">
 
 <head>
-  <meta charset="utf-8">
-  <head>
-  <body>
-    <!--<button id="play" onclick="play()">播放</button> -->
-    <video style="height:500px" controls autoplay muted id="videoElement"></video>
-    <script src="flv.min.js"></script>
-    <script>
-      var type =getQueryVariable("type");
-     // var ws="ws://172.45.8.36:8189/powersmart/"+type+"";
-      //alert(ws);
-      var flvPlayer = null;
-	  
-    var player = document.getElementById('videoElement'); 
-        if (flvjs.isSupported()) { 
-          flvPlayer = flvjs.createPlayer({
-            type: 'flv', 
-            isLive: true,
-            url: "ws://127.0.0.1:8189/powersmart/test"//streamName 8128B493002
-          });
-          flvPlayer.attachMediaElement(videoElement);
-          flvPlayer.load();  
-         flvPlayer.play();
-        }   
-      function play() {
-        player.play();
-      }
-	  
+    <meta charset="utf-8" />
+	<style>
+	.home-video {
+		object-fit:fill;
+	}
+	</style>
+    </head>
+        <body style="margin:0">
+            <!--<button id="play" onclick="play()">播放</button> -->
+            <video class="home-video" controls autoplay muted id="videoElement"></video>
+            <script src="flv.min.js"></script>
+			<script src="jquery.min.js"></script>
+            <script> 
+                var deviceId = getQueryVariable("deviceId");
+				var retryCount = 3;
+                var flvPlayer = null;
+                if (deviceId == null || deviceId == "") {
+                    deviceId = 'streamName1';
+                }
+				var vdo = $('#videoElement');
+				function getVideoInfo () {
+					vdo.height($(window).height());
+					vdo.width($(window).width());
+					window.onresize = function() { 
+						vdo.height($(window).height());
+						vdo.width($(window).width());
+					}
+				}
+//getVideoInfo();
+                var player = document.getElementById('videoElement');
+                if (flvjs.isSupported()) {
+                    flvPlayer = flvjs.createPlayer({
+                        type: 'flv',
+                        isLive: true,
+                        url: "ws://127.0.0.1:8189/powersmart/" + deviceId//streamName 8128B493002 test
+                    });
+                    flvPlayer.attachMediaElement(videoElement);
+                    flvPlayer.load();
+                    flvPlayer.play();
 
-	  
-//http://www.runoob.com/index.php?id=1&image=awesome.jpg
-//调用 getQueryVariable("id") 返回 1。
+                    flvPlayer.on('error', err => {
+						setTimeout(function(){
+							if(retryCount>0){
+								play();	
+								--retryCount;
+							}
+						},200);
+                        console.log('err', err);
+                        
+                    });
+                }
+                function play() {
+                    player.play();
+                }
 
-//调用 getQueryVariable("image") 返回 "awesome.jpg"。
- function getQueryVariable(variable)
-{
-       var query = window.location.search.substring(1);
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
-}
-  
-    </script>
-  </body>
+
+
+                //http://www.runoob.com/index.php?id=1&image=awesome.jpg
+                //调用 getQueryVariable("id") 返回 1。
+
+                //调用 getQueryVariable("image") 返回 "awesome.jpg"。
+                function getQueryVariable(variable) {
+                    var query = window.location.search.substring(1);
+                    var vars = query.split("&");
+                    for (var i = 0; i < vars.length; i++) {
+                        var pair = vars[i].split("=");
+                        if (pair[0] == variable) { return pair[1]; }
+                    }
+                    return (false);
+                }
+
+            </script>
+        </body>
 
 </html>

@@ -1,6 +1,6 @@
 ﻿namespace PowerStream.Core
 {
-    public class ProccessInfo
+    public class StreamInfo
     {
         public string StreamName { get; set; }
         public string GlobalParam { get; set; }
@@ -12,6 +12,6 @@
 
     public interface IProccessService : ISingletonDependency
     {
-        void Send(ProccessInfo info);
+        void Send(StreamInfo info);
     }
 }

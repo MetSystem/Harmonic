@@ -21,7 +21,7 @@ namespace PowerStreamServer
             TyService = service;
         }
 
-        public void Send(ProccessInfo info)
+        public void Send(StreamInfo info)
         {
             info.GlobalParam = PowerOption.Sources.GlobalParam;
             info.InputParam = PowerOption.Sources.InputParam;

@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Harmonic.Controllers
 {
-    public class WebSocketPlayController : WebSocketController, IDisposable
+    public class WebSocketPlayController : 
+        WebSocketController, IDisposable
     {
         private RecordService _recordService = null;
         private PublisherSessionService _publisherSessionService = null;
