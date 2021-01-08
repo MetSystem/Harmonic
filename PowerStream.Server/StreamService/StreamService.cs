@@ -37,7 +37,7 @@ namespace PowerStream.Server
                 };
 
                 var serivce = IoCHelper.ResolveNamed<IProccessService>(PowerOption.StreamType);
-                serivce.Send(info);
+                serivce.Send(info, PowerOption);
                 var data = PowerManager.FFmpegProcessList.FirstOrDefault(t => t.StreamName == streamName);
                 if (!(data == null || data.PID == null || data.LastActiveTime == DateTime.MinValue))
                 {
@@ -69,7 +69,7 @@ namespace PowerStream.Server
                 };
                 data.InitEvent = (t) =>
                 {
-                    IoCHelper.ResolveNamed<IProccessService>(PowerOption.StreamType)?.Send(t);
+                    IoCHelper.ResolveNamed<IProccessService>(PowerOption.StreamType)?.Send(t, PowerOption);
                 };
 
                 //iConversion.Start(data.Command, t =>

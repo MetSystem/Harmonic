@@ -9,25 +9,14 @@ namespace PowerStream.Server
     {
         public void ConfigureServices(ContainerBuilder builder)
         {
-            IoCHelper.Init(builder);
             var services = IoCHelper.GetAssignableFrom<IModuleService>();
-            if (services != null)
-            {
-                foreach (var item in services)
-                {
-                    item.Init();
-                }
-            }
+            services?.ForEach(t => t.Init());
+            IoCHelper.Init(builder);
+
             var powerOptions = PowerManager.Configuration.GetSection("Server").Get<PowerOptions>();
             builder.RegisterType<PowerSmartController>().AsSelf();
             builder.RegisterType<StreamService>().As<IStreamService>();
             builder.RegisterInstance<PowerOptions>(powerOptions);
-            IoCHelper.BeforeInit += IoCHelper_BeforeInit;
-        }
-
-        private void IoCHelper_BeforeInit(ContainerBuilder func)
-        {
-
         }
     }
 }

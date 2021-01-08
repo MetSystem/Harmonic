@@ -17,8 +17,6 @@ namespace PowerStream.Server
     {
         private static async Task Main(string[] args)
         {
-            var services = IoCHelper.GetAssignableFrom<IModuleService>();
-            services?.ForEach(t => t.Init());
 
             var powerOptions = PowerManager.Configuration.GetSection("Server").Get<PowerOptions>();
             var executablesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FFmpeg");

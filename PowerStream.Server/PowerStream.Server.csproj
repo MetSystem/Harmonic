@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Harmonic\Harmonic.csproj" />
+    <ProjectReference Include="..\Power.TykdStream\Power.TykdStream.csproj" />
     <ProjectReference Include="..\Power.WebStream\Power.WebStream.csproj" />
     <ProjectReference Include="..\PowerStream.Core\PowerStream.Core.csproj" />
     <ProjectReference Include="..\Xabe.FFmpeg\Xabe.FFmpeg.csproj" />

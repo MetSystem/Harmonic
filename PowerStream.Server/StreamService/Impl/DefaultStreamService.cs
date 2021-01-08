@@ -1,5 +1,4 @@
 ﻿using PowerStream.Core;
-using System;
 
 namespace PowerStream.Server.Impl
 {
@@ -13,9 +12,8 @@ namespace PowerStream.Server.Impl
             PowerOption = option;
         }
 
-        public void Send(StreamInfo info)
+        public void Send(StreamInfo info, PowerOptions powerOptions)
         {
-            throw new NotImplementedException();
         }
     }
 }

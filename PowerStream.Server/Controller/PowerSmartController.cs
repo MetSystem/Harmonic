@@ -1,9 +1,6 @@
 ﻿using Harmonic.Controllers;
-using Harmonic.Networking.WebSocket;
 using Harmonic.Service;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using PowerStream.Core;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +10,7 @@ namespace PowerStream.Server
     [NeverRegister]
     internal class PowerSmartController : WebSocketPlayController
     {
-        private IStreamService StreamService;
+        private IStreamService StreamService { get; set; }
         private PowerOptions PowerOption { get; set; }
 
         public PowerSmartController(PublisherSessionService publisherSessionService, RecordService recordService, IStreamService streamService, PowerOptions option)
