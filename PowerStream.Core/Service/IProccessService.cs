@@ -12,6 +12,6 @@
 
     public interface IProccessService : ISingletonDependency
     {
-        void Send(StreamInfo info);
+        void Send(StreamInfo info, PowerOptions powerOptions);
     }
 }
