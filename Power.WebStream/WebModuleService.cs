@@ -16,7 +16,7 @@ namespace Power.WebStream
 
         private void IoCHelper_BeforeInit(Autofac.ContainerBuilder func)
         {
-            var tianyiOptions = WebManager.Configuration.GetSection("Web.Config").Get<WebOptions>();
+            var tianyiOptions = WebManager.Configuration.GetSection("Config").Get<WebOptions>();
             var webClient = new WebClient();
             func.RegisterInstance<WebClient>(webClient);
         }

@@ -1,5 +1,5 @@
 {
-  "Web.Config": {
+  "Config": {
     "Url": "****",
     "AppSecret": "****",
     "Account": "****"

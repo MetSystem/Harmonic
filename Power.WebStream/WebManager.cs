@@ -13,7 +13,7 @@ namespace Power.WebStream
             {
                 if (_config == null)
                 {
-                    _config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("webconfg.json").Build();
+                    _config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("restfulconfg.json").Build();
                 }
 
                 return _config;

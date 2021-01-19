@@ -15,11 +15,11 @@
             <script src="flv.min.js"></script>
 			<script src="jquery.min.js"></script>
             <script> 
-                var deviceId = getQueryVariable("deviceId");
+                var deviceId = getQueryVariable("deviceId") ||getQueryVariable("DeviceId");
 				var retryCount = 3;
                 var flvPlayer = null;
                 if (deviceId == null || deviceId == "") {
-                    deviceId = 'streamName1';
+                    deviceId = '8128B493002';
                 }
 				var vdo = $('#videoElement');
 				function getVideoInfo () {

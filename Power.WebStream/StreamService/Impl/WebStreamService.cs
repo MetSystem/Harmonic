@@ -9,7 +9,7 @@ namespace Power.WebStream
         public void Send(StreamInfo info, PowerOptions powerOptions)
         {
             WebClient webClient = new WebClient();
-            info.SourceLink = webClient.DownloadString("http://183.131.138.61:9080/video?type=Rtmp&sourceid=0000000000200000000000001244435:0000000000140000000000001231833:192.168.10.148:331100");
+            info.SourceLink = webClient.DownloadString("http://183.131.138.61:9080/video?type=Rtmp&sourceid=" + info.StreamName);
         }
     }
 }

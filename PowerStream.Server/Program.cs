@@ -39,30 +39,35 @@ namespace PowerStream.Server
             {
                 while (true)
                 {
-                    Parallel.ForEach(PowerManager.FFmpegProcessList, (item) =>
+                    try
                     {
-                        if (item.PushStreamTime.HasValue && item.LastActiveTime.AddSeconds(5) <= DateTime.Now)
+                        Parallel.ForEach(PowerManager.FFmpegProcessList, (item) =>
                         {
-                            item.LastActiveTime = DateTime.Now;
-                            item.PushStreamTime = null;
-                            item.InitEvent(item.StreamInfo);
-                            Process.GetProcessesByName("ffmpeg")?.FirstOrDefault(p => p.Id == item.PID.Value)?.Kill();
-                            var iConversion = FFmpeg.Conversions.New();
-                            iConversion.OnDataReceived += item.IConversion_OnDataReceived;
-                            iConversion.OnProgress += item.IConversion_OnProgress;
-                            iConversion.Start(item.Command, item.StartAction);
-                        }
+                            if (item.PushStreamTime.HasValue && item.LastActiveTime.AddSeconds(5) <= DateTime.Now)
+                            {
+                                item.LastActiveTime = DateTime.Now;
+                                item.PushStreamTime = null;
+                                item.InitEvent(item.StreamInfo);
+                                Process.GetProcessesByName("ffmpeg")?.FirstOrDefault(p => p.Id == item.PID.Value)?.Kill();
+                                var iConversion = FFmpeg.Conversions.New();
+                                iConversion.OnDataReceived += item.IConversion_OnDataReceived;
+                                iConversion.OnProgress += item.IConversion_OnProgress;
+                                iConversion.Start(item.Command, item.StartAction);
+                            }
 
-                        if (!item.PushStreamTime.HasValue && item.LastActiveTime.AddSeconds(10) <= DateTime.Now)
-                        {
-                            Process.GetProcessesByName("ffmpeg")?.FirstOrDefault(p => p.Id == item.PID.Value)?.Kill();
-                            item.PID = null;
-                            item.PushStreamTime = null;
-                            item.LastActiveTime = DateTime.Now;
-                        }
-                    });
-
-                    Thread.Sleep(5 * 1000);
+                            if (!item.PushStreamTime.HasValue && item.LastActiveTime.AddSeconds(10) <= DateTime.Now)
+                            {
+                                Process.GetProcessesByName("ffmpeg")?.FirstOrDefault(p => p.Id == item.PID.Value)?.Kill();
+                                item.PID = null;
+                                item.PushStreamTime = null;
+                                item.LastActiveTime = DateTime.Now;
+                            }
+                        });
+                    }
+                    finally
+                    {
+                        Thread.Sleep(5 * 1000);
+                    }
                 }
             });
 

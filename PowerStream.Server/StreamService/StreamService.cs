@@ -78,11 +78,6 @@ namespace PowerStream.Server
                 //    data.LastActiveTime = DateTime.Now;
                 //    Console.WriteLine($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}]FFmpeg进程ID为：{ data.PID }-----------------");
                 //});
-
-                while (!data.PID.HasValue)
-                {
-                    Thread.Sleep(500);
-                }
             }
             finally
             {

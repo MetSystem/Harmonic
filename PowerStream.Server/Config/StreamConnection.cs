@@ -40,7 +40,7 @@ namespace PowerStream.Server
         {
             this.PID = t;
             this.LastActiveTime = DateTime.Now;
-            Console.WriteLine($"-----------------[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}] FFmpeg进程ID为：{ this.PID }-----------------");
+            Console.WriteLine($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}] FFmpeg进程{ this.PID }=> {this.Command}");
         };
 
         public string Command
